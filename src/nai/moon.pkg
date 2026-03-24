@@ -7,8 +7,14 @@ import {
   "moonbitlang/async/stdio",
   "moonbitlang/x/sys",
   "moonbitlang/core/json",
+  "mizchi/tui",
+  "mizchi/tui/io",
+  "mizchi/tui/vnode",
+  "mizchi/tui/render",
+  "mizchi/signals",
 }
 
 options(
   "is-main": true,
+  link: { "native": { "cc-link-flags": ".mooncakes/mizchi/tui/src/io/tui_native.c" } },
 )

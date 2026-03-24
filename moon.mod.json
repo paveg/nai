@@ -1,10 +1,12 @@
 {
   "name": "paveg/nai",
   "version": "0.1.0",
-  "preferred-target": "native",
   "deps": {
     "moonbitlang/async": "0.16.8",
-    "moonbitlang/x": "0.4.40"
+    "moonbitlang/x": "0.4.40",
+    "mizchi/tui": "0.8.0",
+    "mizchi/signals": "0.6.4"
   },
-  "source": "src"
+  "source": "src",
+  "preferred-target": "native"
 }

@@ -9,6 +9,7 @@ pub fn parse_args(raw : Array[String]) -> CliArgs {
   let mut history_depth = -1
   let mut no_history = false
   let mut init_shell = ""
+  let mut setup = false
   let positional : Array[String] = []
   let mut i = 1 // skip program name
   while i < raw.length() {
@@ -49,6 +50,7 @@ pub fn parse_args(raw : Array[String]) -> CliArgs {
           }
         }
       }
+      "--setup" => setup = true
       "--init" => {
         i += 1
         if i < raw.length() {
@@ -60,7 +62,7 @@ pub fn parse_args(raw : Array[String]) -> CliArgs {
     i += 1
   }
   let query = positional.join(" ")
-  if query == "" && !help && !version && init_shell == "" {
+  if query == "" && !help && !version && init_shell == "" && !setup {
     help = true
   }
   {
@@ -74,5 +76,6 @@ pub fn parse_args(raw : Array[String]) -> CliArgs {
     history_depth,
     no_history,
     init_shell,
+    setup,
   }
 }

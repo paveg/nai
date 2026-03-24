@@ -29,6 +29,7 @@ async fn print_help() -> Unit {
     $|      --history-depth N  Number of history entries to include (default: 10)
     $|      --no-history     Disable shell history context
     $|      --init <shell>   Generate shell integration (zsh, bash, fish)
+    $|      --setup          Interactive setup wizard
     $|  -h, --help           Show this help
     $|  -V, --version        Show version
   eprintln(help)
@@ -378,6 +379,10 @@ async fn main {
   }
   if args.version {
     print_version()
+    return
+  }
+  if args.setup {
+    run_setup()
     return
   }
 

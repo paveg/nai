@@ -10,6 +10,7 @@ pub struct CliArgs {
   history_depth : Int // -1 means use config default
   no_history : Bool
   init_shell : String // "" or "zsh"/"bash"/"fish"
+  setup : Bool
 } derive(Show, Eq)
 
 ///|
