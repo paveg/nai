@@ -7,6 +7,7 @@
     "moonbitlang/async/fs",
     "moonbitlang/async/process",
     "moonbitlang/async/stdio",
-    "moonbitlang/x/sys"
+    "moonbitlang/x/sys",
+    "moonbitlang/core/json"
   ]
 }
