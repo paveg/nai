@@ -4,7 +4,7 @@ test "build system prompt contains os info" {
     platform: "macos", pkg_manager: "brew", clipboard: "pbcopy",
     find_variant: "bsd", sed_variant: "bsd", date_variant: "bsd",
     stat_variant: "bsd", available_tools: [],
-    history: [],
+    history: [], project_type: "",
   }
   let prompt = build_system_prompt(env)
   assert_true(prompt.contains("macOS 15.2"))
@@ -18,7 +18,7 @@ test "build system prompt contains rules" {
     platform: "linux", pkg_manager: "", clipboard: "",
     find_variant: "gnu", sed_variant: "gnu", date_variant: "gnu",
     stat_variant: "gnu", available_tools: [],
-    history: [],
+    history: [], project_type: "",
   }
   let prompt = build_system_prompt(env)
   assert_true(prompt.contains("one line of shell command"))

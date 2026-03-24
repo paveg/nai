@@ -35,6 +35,7 @@ pub(all) struct Environment {
   stat_variant : String
   available_tools : Array[String]
   history : Array[String]
+  project_type : String // "" or "moonbit", "rust", "go", "node", "python", etc.
 } derive(Show)
 
 pub struct Config {

@@ -1,3 +1,39 @@
+// Project type detection from directory listing
+pub fn detect_project_type(files : Array[String]) -> String {
+  for f in files {
+    match f {
+      "moon.mod.json" => return "moonbit"
+      "Cargo.toml" => return "rust"
+      "go.mod" => return "go"
+      "package.json" => return "node"
+      "pyproject.toml" | "setup.py" | "setup.cfg" => return "python"
+      "Gemfile" => return "ruby"
+      "pom.xml" | "build.gradle" | "build.gradle.kts" => return "java"
+      "Package.swift" => return "swift"
+      "mix.exs" => return "elixir"
+      "deno.json" | "deno.jsonc" => return "deno"
+      _ => continue
+    }
+  }
+  ""
+}
+
+fn project_desc(project_type : String) -> String {
+  match project_type {
+    "moonbit" => "MoonBit (source files: *.mbt, build tool: moon)"
+    "rust" => "Rust (source files: *.rs, build tool: cargo)"
+    "go" => "Go (source files: *.go, build tool: go)"
+    "node" => "Node.js/TypeScript (source files: *.js, *.ts, *.tsx)"
+    "python" => "Python (source files: *.py)"
+    "ruby" => "Ruby (source files: *.rb)"
+    "java" => "Java/Kotlin (source files: *.java, *.kt)"
+    "swift" => "Swift (source files: *.swift)"
+    "elixir" => "Elixir (source files: *.ex, *.exs)"
+    "deno" => "Deno/TypeScript (source files: *.ts, *.tsx)"
+    _ => ""
+  }
+}
+
 fn variant_desc(tool : String, variant : String) -> String {
   let v = if variant == "bsd" { "BSD" } else { "GNU" }
   let detail = match (tool, variant) {
@@ -48,6 +84,14 @@ pub fn build_env_prompt(env : Environment) -> String {
     let tools_str = env.available_tools.join(", ")
     buf.write_string("- Available: \{tools_str}\n")
   }
+  // Project context
+  if env.project_type != "" {
+    let desc = project_desc(env.project_type)
+    if desc != "" {
+      buf.write_string("- Project: \{desc}\n")
+    }
+  }
+
   buf.write_string(
     "\nUse available tools when they are better suited. For example, prefer 'rg' over 'grep' if available.\n",
   )

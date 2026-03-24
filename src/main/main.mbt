@@ -178,6 +178,23 @@ async fn detect_pkg_manager(platform : String) -> String {
   ""
 }
 
+async fn detect_project_type(cwd : String) -> String {
+  try {
+    let (_, output) = @process.collect_output_merged("ls", ["-1", cwd])
+    let text = output.text()
+    let files : Array[String] = []
+    for line in text.split("\n") {
+      let s = line.to_string().trim().to_string()
+      if s != "" {
+        files.push(s)
+      }
+    }
+    @lib.detect_project_type(files)
+  } catch {
+    _ => ""
+  }
+}
+
 async fn load_config() -> @lib.Config {
   let config_dir = match @sys.get_env_var("XDG_CONFIG_HOME") {
     Some(dir) => "\{dir}/nai"
@@ -370,6 +387,7 @@ async fn main {
   let available = detect_available_tools()
   let clipboard = detect_clipboard(platform)
   let pkg_mgr = detect_pkg_manager(platform)
+  let project_type = detect_project_type(cwd)
 
   // Load history
   let history_depth = if args.no_history {
@@ -394,6 +412,7 @@ async fn main {
     stat_variant: stat_v,
     available_tools: available,
     history,
+    project_type,
   }
 
   // Resolve provider
