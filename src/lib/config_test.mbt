@@ -6,7 +6,7 @@ test "default_config has expected values" {
   assert_eq(c.ollama_base_url, "http://localhost:11434/v1")
   assert_eq(c.ollama_model, "qwen2.5-coder:7b")
   assert_eq(c.openai_base_url, "https://api.openai.com/v1")
-  assert_eq(c.openai_model, "gpt-4.1-nano")
+  assert_eq(c.openai_model, "gpt-4.1-mini")
   assert_eq(c.claude_base_url, "https://api.anthropic.com/v1")
   assert_eq(c.claude_model, "claude-haiku-4-5-20251001")
 }
@@ -42,7 +42,7 @@ test "parse_config with partial JSON fills defaults" {
   assert_eq(c.default_provider, "claude")
   assert_eq(c.history_depth, 5)
   assert_eq(c.ollama_model, "qwen2.5-coder:7b")
-  assert_eq(c.openai_model, "gpt-4.1-nano")
+  assert_eq(c.openai_model, "gpt-4.1-mini")
 }
 
 test "parse_config ignores unknown fields" {

@@ -13,7 +13,7 @@ test "build ollama provider with custom model" {
 test "build openai provider" {
   let p = build_provider(name="openai", model="", api_key="sk-test123")
   assert_eq(p.base_url, "https://api.openai.com/v1")
-  assert_eq(p.model, "gpt-4.1-nano")
+  assert_eq(p.model, "gpt-4.1-mini")
   assert_eq(p.headers.get("Authorization"), Some("Bearer sk-test123"))
 }
 

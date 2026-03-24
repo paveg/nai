@@ -6,7 +6,7 @@ pub fn default_config() -> Config {
     ollama_base_url: "http://localhost:11434/v1",
     ollama_model: "qwen2.5-coder:7b",
     openai_base_url: "https://api.openai.com/v1",
-    openai_model: "gpt-4.1-nano",
+    openai_model: "gpt-4.1-mini",
     claude_base_url: "https://api.anthropic.com/v1",
     claude_model: "claude-haiku-4-5-20251001",
   }
