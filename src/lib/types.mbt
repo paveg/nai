@@ -36,3 +36,15 @@ pub(all) struct Environment {
   available_tools : Array[String]
   history : Array[String]
 } derive(Show)
+
+pub struct Config {
+  default_provider : String
+  history_depth : Int
+  keybind : String
+  ollama_base_url : String
+  ollama_model : String
+  openai_base_url : String
+  openai_model : String
+  claude_base_url : String
+  claude_model : String
+} derive(Show, Eq)
