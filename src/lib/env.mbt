@@ -1,4 +1,5 @@
 // Project type detection from directory listing
+
 ///|
 pub fn detect_project_type(files : Array[String]) -> String {
   for f in files {
@@ -66,6 +67,7 @@ pub fn build_env_prompt(env : Environment) -> String {
       $|- Output exactly one line of shell command
       $|- If ambiguous, choose the safest interpretation
       $|- Do not wrap in backticks or quotes
+      $|- NEVER invent flags or options — only use flags you are certain exist
     ),
   )
   buf.write_string("\n\nEnvironment:\n")
@@ -99,18 +101,30 @@ pub fn build_env_prompt(env : Environment) -> String {
 
   // Tool preference and style guidelines
   buf.write_string("\nTool preferences (use if available):\n")
-  buf.write_string("- Search: rg > grep (use rg -g '*.ext' for file type filtering, not --type)\n")
+  buf.write_string(
+    "- Search: rg > grep (use rg -g '*.ext' for file type filtering, not --type)\n",
+  )
   buf.write_string("- Find files: fd > find\n")
   buf.write_string("- View files: bat > cat\n")
   buf.write_string("- List files: eza > ls\n")
   buf.write_string("- JSON: jq for JSON processing\n")
   buf.write_string("- Git: gh for GitHub operations\n")
   buf.write_string("\nStyle rules:\n")
-  buf.write_string("- Keep it simple. Minimize pipe chains — 2-3 pipes max.\n")
-  buf.write_string("- Prefer a single tool's built-in flags over piping to another tool.\n")
-  buf.write_string("- Only use flags that actually exist. Never invent flags.\n")
-  buf.write_string("- For dry-run text replacement: rg -g '*.ext' 'pattern' -r 'replacement' (outputs replaced text directly, no pipes needed)\n")
-  buf.write_string("- For sed on this platform, use the correct variant shown above.\n")
+  buf.write_string(
+    "- Keep it simple. Minimize pipe chains — 2-3 pipes max.\n",
+  )
+  buf.write_string(
+    "- Prefer a single tool's built-in flags over piping to another tool.\n",
+  )
+  buf.write_string(
+    "- Only use flags that actually exist. Never invent flags.\n",
+  )
+  buf.write_string(
+    "- For dry-run text replacement: rg -g '*.ext' 'pattern' -r 'replacement' (outputs replaced text directly, no pipes needed)\n",
+  )
+  buf.write_string(
+    "- For sed on this platform, use the correct variant shown above.\n",
+  )
   if !env.history.is_empty() {
     buf.write_string("\nRecent commands (most recent first):\n")
     for i, cmd in env.history {

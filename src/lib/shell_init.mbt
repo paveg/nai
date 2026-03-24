@@ -26,10 +26,14 @@ fn generate_zsh_script(keybind : String) -> String {
   buf.write_string("  local NAI_QUERY\n")
   buf.write_string("  {\n")
   buf.write_string("    local saved_stty=$(stty -g </dev/tty 2>/dev/null)\n")
-  buf.write_string("    [[ -n \"$saved_stty\" ]] && stty sane </dev/tty 2>/dev/null\n")
+  buf.write_string(
+    "    [[ -n \"$saved_stty\" ]] && stty sane </dev/tty 2>/dev/null\n",
+  )
   buf.write_string("    printf '\\nnai> ' >/dev/tty\n")
   buf.write_string("    IFS= read -r NAI_QUERY </dev/tty\n")
-  buf.write_string("    [[ -n \"$saved_stty\" ]] && stty \"$saved_stty\" </dev/tty 2>/dev/null\n")
+  buf.write_string(
+    "    [[ -n \"$saved_stty\" ]] && stty \"$saved_stty\" </dev/tty 2>/dev/null\n",
+  )
   buf.write_string("  }\n")
   buf.write_string("  if [[ -n \"$NAI_QUERY\" ]]; then\n")
   buf.write_string("    printf 'Thinking...\\n' >/dev/tty\n")
