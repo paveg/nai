@@ -14,5 +14,7 @@ import {
 
 options(
   "is-main": true,
-  link: { "native": { "cc-link-flags": ".mooncakes/mizchi/tui/src/io/tui_native.c" } },
+  link: {
+    "native": { "cc-link-flags": ".mooncakes/mizchi/tui/src/io/tui_native.c" },
+  },
 )

@@ -5,7 +5,7 @@ fn tui_pr(s : String) -> Unit {
 
 ///|
 fn tui_prln(s : String) -> Unit {
-  @tui.print_raw(s + "\n")
+  @tui.print_raw(s + "\r\n")
 }
 
 ///|
@@ -97,9 +97,9 @@ fn render_input_lines(
   let lines : Array[String] = []
   if done {
     lines.push(
-      green("✓ ") + bold(question + " ") + cyan(
-        if hidden { "••••••••" } else { display },
-      ),
+      green("✓ ") +
+      bold(question + " ") +
+      cyan(if hidden { "••••••••" } else { display }),
     )
   } else {
     lines.push(yellow("? ") + bold(question))
@@ -223,7 +223,9 @@ pub async fn run_setup() -> Unit {
                 if chosen == "ollama" || has_api_key(chosen) {
                   if has_api_key(chosen) && chosen != "ollama" {
                     let env_name = api_key_env_name(chosen)
-                    tui_prln(green("  ✓ " + env_name + " found in environment"))
+                    tui_prln(
+                      green("  ✓ " + env_name + " found in environment"),
+                    )
                     tui_prln("")
                   }
                   step.set(2)
@@ -239,13 +241,9 @@ pub async fn run_setup() -> Unit {
                   let lines = render_input_lines("API key", key_val, true, true)
                   lines_rendered = tui_print_lines(lines)
                   tui_prln("")
+                  tui_prln(yellow("  → Add to your shell profile:"))
                   tui_prln(
-                    yellow("  → Add to your shell profile:"),
-                  )
-                  tui_prln(
-                    dim(
-                      "    export " + env_name + "=\"" + key_val + "\"",
-                    ),
+                    dim("    export " + env_name + "=\"" + key_val + "\""),
                   )
                   tui_prln("")
                   lines_rendered = 0
@@ -308,7 +306,6 @@ pub async fn run_setup() -> Unit {
 
     try {
       let _ = @process.collect_output_merged("mkdir", ["-p", config_dir])
-
     } catch {
       _ => ()
     }
@@ -339,10 +336,7 @@ pub async fn run_setup() -> Unit {
           Some(h) => h
           None => ""
         }
-        let file_path = @lib.shell_init_path(shell).replace(
-          old="~",
-          new=home,
-        )
+        let file_path = @lib.shell_init_path(shell).replace(old="~", new=home)
         @fs.write_file(file_path, script, create=0o644, truncate=true)
         let source_path = @lib.shell_init_path(shell)
         let rc = @lib.shell_rc_file(shell)
