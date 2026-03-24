@@ -1,0 +1,11 @@
+{
+  "is-main": true,
+  "import": [
+    "paveg/nai/lib",
+    "moonbitlang/async",
+    "moonbitlang/async/http",
+    "moonbitlang/async/fs",
+    "moonbitlang/async/process",
+    "moonbitlang/x/sys"
+  ]
+}
