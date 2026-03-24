@@ -108,7 +108,8 @@ pub fn build_env_prompt(env : Environment) -> String {
   buf.write_string("\nStyle rules:\n")
   buf.write_string("- Keep it simple. Minimize pipe chains — 2-3 pipes max.\n")
   buf.write_string("- Prefer a single tool's built-in flags over piping to another tool.\n")
-  buf.write_string("- Do not use --json output piped to jq when the tool has a simpler text output mode.\n")
+  buf.write_string("- Only use flags that actually exist. Never invent flags.\n")
+  buf.write_string("- For dry-run text replacement: rg -g '*.ext' 'pattern' -r 'replacement'\n")
   buf.write_string("- For sed on this platform, use the correct variant shown above.\n")
   if !env.history.is_empty() {
     buf.write_string("\nRecent commands (most recent first):\n")
