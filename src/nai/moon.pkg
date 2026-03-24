@@ -8,8 +8,6 @@ import {
   "moonbitlang/x/sys",
   "moonbitlang/core/json",
   "mizchi/tui",
-  "mizchi/tui/io",
-  "mizchi/tui/vnode",
   "mizchi/tui/render",
   "mizchi/signals",
 }
