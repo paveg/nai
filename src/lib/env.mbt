@@ -22,7 +22,8 @@ pub fn detect_project_type(files : Array[String]) -> String {
 ///|
 fn project_desc(project_type : String) -> String {
   match project_type {
-    "moonbit" => "MoonBit (source files: *.mbt, build tool: moon)"
+    "moonbit" =>
+      "MoonBit (source files: *.mbt, build tool: moon, rg does not recognize --type mbt so use -g '*.mbt')"
     "rust" => "Rust (source files: *.rs, build tool: cargo)"
     "go" => "Go (source files: *.go, build tool: go)"
     "node" => "Node.js/TypeScript (source files: *.js, *.ts, *.tsx)"
