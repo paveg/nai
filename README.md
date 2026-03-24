@@ -112,7 +112,7 @@ The system prompt is enriched with:
 
 ```sh
 moon build --target native    # build
-moon test --target native     # 85 tests
+moon test --target native
 moon run src/nai --target native -- "your query"
 ```
 
