@@ -270,9 +270,10 @@ async fn handle_init(shell : String, config : @lib.Config) -> Unit {
   @fs.write_file(file_path, script, create=0o644, truncate=true)
   let source_path = @lib.shell_init_path(shell)
   let rc = @lib.shell_rc_file(shell)
-  eprintln("Shell integration installed to \{source_path}")
-  eprintln("Add this line to your \{rc}:")
-  eprintln("  source \{source_path}")
+  eprintln("\u001b[32m✓\u001b[0m Installed to \{source_path}")
+  eprintln("")
+  eprintln("  Add to \{rc}:")
+  eprintln("  \u001b[2msource \{source_path}\u001b[0m")
 }
 
 ///|
@@ -334,7 +335,7 @@ async fn generate(
   } else {
     "\{provider.base_url}/chat/completions"
   }
-  eprintln("\u001b[2mThinking...\u001b[0m")
+  eprint("\u001b[2m◌ generating...\u001b[0m")
   let (response, result) = @http.post(endpoint, body, headers=provider.headers)
   guard response.code >= 200 && response.code < 300 else {
     let error_text = result.text() catch { _ => "" }
@@ -343,6 +344,8 @@ async fn generate(
   let json = result.json() catch {
     _ => abort("Failed to parse API response as JSON")
   }
+  // Clear the "generating..." line
+  eprint("\r\u001b[K")
   let content = if provider_name == "claude" {
     @lib.extract_claude_content(json)
   } else {
@@ -353,7 +356,7 @@ async fn generate(
 
 ///|
 async fn read_confirmation() -> Bool {
-  eprint("\u001b[1;33mExecute this command? [y/N]\u001b[0m ")
+  eprint("\u001b[33m? Execute? [y/N]\u001b[0m ")
   let line = @stdio.stdin.read_until("\n")
   match line {
     Some(s) => {
@@ -433,7 +436,7 @@ async fn main {
     api_key~,
   )
 
-  eprintln("\u001b[2mProvider: \{provider_name} (\{provider.model})\u001b[0m")
+  eprintln("\u001b[2m● \{provider_name}/\{provider.model}\u001b[0m")
 
   let system = @lib.build_system_prompt(env)
 
