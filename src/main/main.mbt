@@ -182,15 +182,30 @@ async fn main {
 
   eprintln("\u001b[2mProvider: \{provider_name} (\{provider.model})\u001b[0m")
 
+  let env : @lib.Environment = {
+    os,
+    shell,
+    cwd,
+    platform: "",
+    pkg_manager: "",
+    clipboard: "",
+    find_variant: "",
+    sed_variant: "",
+    date_variant: "",
+    stat_variant: "",
+    available_tools: [],
+    history: [],
+  }
+
   if args.explain {
     let prompt = @lib.build_explain_prompt(args.query)
-    let system = @lib.build_system_prompt(os~, shell~, cwd~)
+    let system = @lib.build_system_prompt(env)
     let explanation = generate(provider, provider_name, system, prompt)
     eprintln(explanation)
     return
   }
 
-  let system = @lib.build_system_prompt(os~, shell~, cwd~)
+  let system = @lib.build_system_prompt(env)
   let command = generate(provider, provider_name, system, args.query)
 
   let report = @lib.analyze_safety(command)
