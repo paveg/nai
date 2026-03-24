@@ -97,9 +97,19 @@ pub fn build_env_prompt(env : Environment) -> String {
     }
   }
 
-  buf.write_string(
-    "\nUse available tools when they are better suited. For example, prefer 'rg' over 'grep' if available.\n",
-  )
+  // Tool preference and style guidelines
+  buf.write_string("\nTool preferences (use if available):\n")
+  buf.write_string("- Search: rg > grep (use rg -g '*.ext' for file type filtering, not --type)\n")
+  buf.write_string("- Find files: fd > find\n")
+  buf.write_string("- View files: bat > cat\n")
+  buf.write_string("- List files: eza > ls\n")
+  buf.write_string("- JSON: jq for JSON processing\n")
+  buf.write_string("- Git: gh for GitHub operations\n")
+  buf.write_string("\nStyle rules:\n")
+  buf.write_string("- Keep it simple. Minimize pipe chains — 2-3 pipes max.\n")
+  buf.write_string("- Prefer a single tool's built-in flags over piping to another tool.\n")
+  buf.write_string("- Do not use --json output piped to jq when the tool has a simpler text output mode.\n")
+  buf.write_string("- For sed on this platform, use the correct variant shown above.\n")
   if !env.history.is_empty() {
     buf.write_string("\nRecent commands (most recent first):\n")
     for i, cmd in env.history {
