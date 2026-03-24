@@ -1,9 +1,11 @@
+///|
 priv struct SafetyRule {
   patterns : Array[String]
   message : String
   dangerous : Bool
 }
 
+///|
 fn safety_rules() -> Array[SafetyRule] {
   [
     // Dangerous rules
@@ -23,8 +25,9 @@ fn safety_rules() -> Array[SafetyRule] {
       dangerous: true,
     },
     {
-      patterns: ["curl | sh", "curl | bash", "wget | sh", "wget | bash",
-                  "| bash", "| sh"],
+      patterns: [
+        "curl | sh", "curl | bash", "wget | sh", "wget | bash", "| bash", "| sh",
+      ],
       message: "Remote script execution via pipe",
       dangerous: true,
     },
@@ -67,6 +70,7 @@ fn safety_rules() -> Array[SafetyRule] {
   ]
 }
 
+///|
 pub fn analyze_safety(command : String) -> DangerReport {
   let lower = command.to_lower()
   let warnings : Array[String] = []
@@ -90,6 +94,7 @@ pub fn analyze_safety(command : String) -> DangerReport {
   { is_dangerous, warnings }
 }
 
+///|
 pub fn format_warnings(report : DangerReport) -> String {
   if report.warnings.is_empty() {
     return ""
@@ -98,7 +103,9 @@ pub fn format_warnings(report : DangerReport) -> String {
   if report.is_dangerous {
     buf.write_string("\u001b[1;31m⛔ DANGEROUS COMMAND DETECTED\u001b[0m\n")
   } else {
-    buf.write_string("\u001b[1;33m⚠ Warning: potentially dangerous command\u001b[0m\n")
+    buf.write_string(
+      "\u001b[1;33m⚠ Warning: potentially dangerous command\u001b[0m\n",
+    )
   }
   for w in report.warnings {
     buf.write_string("  → \{w}\n")

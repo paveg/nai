@@ -1,3 +1,4 @@
+///|
 pub fn default_config() -> Config {
   {
     default_provider: "ollama",
@@ -12,6 +13,7 @@ pub fn default_config() -> Config {
   }
 }
 
+///|
 pub fn parse_config(json : Json) -> Config {
   let d = default_config()
   let default_provider = match json {

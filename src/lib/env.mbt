@@ -1,4 +1,5 @@
 // Project type detection from directory listing
+///|
 pub fn detect_project_type(files : Array[String]) -> String {
   for f in files {
     match f {
@@ -18,6 +19,7 @@ pub fn detect_project_type(files : Array[String]) -> String {
   ""
 }
 
+///|
 fn project_desc(project_type : String) -> String {
   match project_type {
     "moonbit" => "MoonBit (source files: *.mbt, build tool: moon)"
@@ -34,6 +36,7 @@ fn project_desc(project_type : String) -> String {
   }
 }
 
+///|
 fn variant_desc(tool : String, variant : String) -> String {
   let v = if variant == "bsd" { "BSD" } else { "GNU" }
   let detail = match (tool, variant) {
@@ -49,6 +52,7 @@ fn variant_desc(tool : String, variant : String) -> String {
   "\{v} \{tool}\{detail}"
 }
 
+///|
 pub fn build_env_prompt(env : Environment) -> String {
   let buf = StringBuilder::new()
   buf.write_string(
@@ -80,7 +84,7 @@ pub fn build_env_prompt(env : Environment) -> String {
   if env.pkg_manager != "" {
     buf.write_string("- Package manager: \{env.pkg_manager}\n")
   }
-  if !(env.available_tools.is_empty()) {
+  if !env.available_tools.is_empty() {
     let tools_str = env.available_tools.join(", ")
     buf.write_string("- Available: \{tools_str}\n")
   }
@@ -95,7 +99,7 @@ pub fn build_env_prompt(env : Environment) -> String {
   buf.write_string(
     "\nUse available tools when they are better suited. For example, prefer 'rg' over 'grep' if available.\n",
   )
-  if !(env.history.is_empty()) {
+  if !env.history.is_empty() {
     buf.write_string("\nRecent commands (most recent first):\n")
     for i, cmd in env.history {
       buf.write_string("\{i + 1}. \{cmd}\n")

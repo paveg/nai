@@ -1,3 +1,4 @@
+///|
 pub fn generate_shell_script(shell : String, keybind~ : String) -> String {
   match shell {
     "zsh" => generate_zsh_script(keybind)
@@ -7,6 +8,7 @@ pub fn generate_shell_script(shell : String, keybind~ : String) -> String {
   }
 }
 
+///|
 fn generate_zsh_script(keybind : String) -> String {
   let buf = StringBuilder::new()
   buf.write_string("# nai shell integration for zsh\n")
@@ -33,6 +35,7 @@ fn generate_zsh_script(keybind : String) -> String {
   buf.to_string()
 }
 
+///|
 fn generate_bash_script(keybind : String) -> String {
   let buf = StringBuilder::new()
   buf.write_string("# nai shell integration for bash\n")
@@ -55,6 +58,7 @@ fn generate_bash_script(keybind : String) -> String {
   buf.to_string()
 }
 
+///|
 fn generate_fish_script(keybind : String) -> String {
   // Convert ^X notation to \cX for fish bind syntax
   let fish_keybind = if keybind.has_prefix("^") {
@@ -80,6 +84,7 @@ fn generate_fish_script(keybind : String) -> String {
   buf.to_string()
 }
 
+///|
 pub fn shell_rc_file(shell : String) -> String {
   match shell {
     "zsh" => "~/.zshrc"
@@ -89,6 +94,7 @@ pub fn shell_rc_file(shell : String) -> String {
   }
 }
 
+///|
 pub fn shell_init_path(shell : String) -> String {
   match shell {
     "zsh" => "~/.config/nai/nai.zsh"

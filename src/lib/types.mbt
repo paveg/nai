@@ -1,27 +1,31 @@
+///|
 pub struct CliArgs {
   query : String
   exec : Bool
   explain : Bool
-  provider : String  // "auto", "ollama", "openai", "claude"
-  model : String     // "" means use provider default
+  provider : String // "auto", "ollama", "openai", "claude"
+  model : String // "" means use provider default
   help : Bool
   version : Bool
-  history_depth : Int  // -1 means use config default
+  history_depth : Int // -1 means use config default
   no_history : Bool
-  init_shell : String  // "" or "zsh"/"bash"/"fish"
+  init_shell : String // "" or "zsh"/"bash"/"fish"
 } derive(Show, Eq)
 
+///|
 pub struct Provider {
   base_url : String
   headers : Map[String, String]
   model : String
 } derive(Show)
 
+///|
 pub struct DangerReport {
   is_dangerous : Bool
   warnings : Array[String]
 } derive(Show, Eq)
 
+///|
 pub(all) struct Environment {
   os : String
   shell : String
@@ -38,6 +42,7 @@ pub(all) struct Environment {
   project_type : String // "" or "moonbit", "rust", "go", "node", "python", etc.
 } derive(Show)
 
+///|
 pub struct Config {
   default_provider : String
   history_depth : Int

@@ -1,0 +1,106 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "paveg/nai/lib"
+
+// Values
+pub fn analyze_safety(String) -> DangerReport
+
+pub fn build_env_prompt(Environment) -> String
+
+pub fn build_explain_prompt(String) -> String
+
+pub fn build_provider(name~ : String, model~ : String, api_key~ : String) -> Provider
+
+pub fn build_request_body(provider_name~ : String, model~ : String, system~ : String, user~ : String) -> Json
+
+pub fn build_system_prompt(Environment) -> String
+
+pub fn default_config() -> Config
+
+pub fn extract_claude_content(Json) -> String
+
+pub fn extract_content(Json) -> String
+
+pub fn format_warnings(DangerReport) -> String
+
+pub fn generate_shell_script(String, keybind~ : String) -> String
+
+pub fn get_history_path(String) -> String
+
+pub fn is_sensitive(String) -> Bool
+
+pub fn parse_args(Array[String]) -> CliArgs
+
+pub fn parse_config(Json) -> Config
+
+pub fn parse_history(String, String, depth~ : Int) -> Array[String]
+
+pub fn shell_init_path(String) -> String
+
+pub fn shell_rc_file(String) -> String
+
+// Errors
+
+// Types and methods
+pub struct CliArgs {
+  query : String
+  exec : Bool
+  explain : Bool
+  provider : String
+  model : String
+  help : Bool
+  version : Bool
+  history_depth : Int
+  no_history : Bool
+  init_shell : String
+}
+pub impl Eq for CliArgs
+pub impl Show for CliArgs
+
+pub struct Config {
+  default_provider : String
+  history_depth : Int
+  keybind : String
+  ollama_base_url : String
+  ollama_model : String
+  openai_base_url : String
+  openai_model : String
+  claude_base_url : String
+  claude_model : String
+}
+pub impl Eq for Config
+pub impl Show for Config
+
+pub struct DangerReport {
+  is_dangerous : Bool
+  warnings : Array[String]
+}
+pub impl Eq for DangerReport
+pub impl Show for DangerReport
+
+pub(all) struct Environment {
+  os : String
+  shell : String
+  cwd : String
+  platform : String
+  pkg_manager : String
+  clipboard : String
+  find_variant : String
+  sed_variant : String
+  date_variant : String
+  stat_variant : String
+  available_tools : Array[String]
+  history : Array[String]
+}
+pub impl Show for Environment
+
+pub struct Provider {
+  base_url : String
+  headers : Map[String, String]
+  model : String
+}
+pub impl Show for Provider
+
+// Type aliases
+
+// Traits
+

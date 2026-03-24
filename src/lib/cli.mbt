@@ -1,3 +1,4 @@
+///|
 pub fn parse_args(raw : Array[String]) -> CliArgs {
   let mut exec = false
   let mut explain = false
@@ -62,5 +63,16 @@ pub fn parse_args(raw : Array[String]) -> CliArgs {
   if query == "" && !help && !version && init_shell == "" {
     help = true
   }
-  { query, exec, explain, provider, model, help, version, history_depth, no_history, init_shell }
+  {
+    query,
+    exec,
+    explain,
+    provider,
+    model,
+    help,
+    version,
+    history_depth,
+    no_history,
+    init_shell,
+  }
 }

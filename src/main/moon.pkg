@@ -1,0 +1,14 @@
+import {
+  "paveg/nai/lib",
+  "moonbitlang/async",
+  "moonbitlang/async/http",
+  "moonbitlang/async/fs",
+  "moonbitlang/async/process",
+  "moonbitlang/async/stdio",
+  "moonbitlang/x/sys",
+  "moonbitlang/core/json",
+}
+
+options(
+  "is-main": true,
+)
