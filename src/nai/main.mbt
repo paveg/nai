@@ -30,6 +30,7 @@ async fn print_help() -> Unit {
     $|      --no-history     Disable shell history context
     $|      --init <shell>   Generate shell integration (zsh, bash, fish)
     $|      --setup          Interactive setup wizard
+    $|  -i, --interactive   TUI input mode (used by shell integration)
     $|  -h, --help           Show this help
     $|  -V, --version        Show version
   eprintln(help)
@@ -395,6 +396,17 @@ async fn main {
     return
   }
 
+  // Interactive mode: get query from TUI input
+  let query = if args.interactive {
+    let q = run_interactive()
+    if q == "" {
+      return
+    }
+    q
+  } else {
+    args.query
+  }
+
   // Detect environment
   let os = detect_os()
   let shell = detect_shell()
@@ -446,13 +458,13 @@ async fn main {
   let system = @lib.build_system_prompt(env)
 
   if args.explain {
-    let prompt = @lib.build_explain_prompt(args.query)
+    let prompt = @lib.build_explain_prompt(query)
     let explanation = generate(provider, provider_name, system, prompt)
     eprintln(explanation)
     return
   }
 
-  let command = generate(provider, provider_name, system, args.query)
+  let command = generate(provider, provider_name, system, query)
 
   let report = @lib.analyze_safety(command)
   let warning = @lib.format_warnings(report)

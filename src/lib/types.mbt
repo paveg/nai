@@ -11,6 +11,7 @@ pub struct CliArgs {
   no_history : Bool
   init_shell : String // "" or "zsh"/"bash"/"fish"
   setup : Bool
+  interactive : Bool
 } derive(Show, Eq)
 
 ///|

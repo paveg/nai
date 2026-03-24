@@ -2,7 +2,7 @@
 test "generate zsh script" {
   let script = generate_shell_script("zsh", keybind="^]")
   assert_true(script.contains("_nai_widget"))
-  assert_true(script.contains("/dev/tty"))
+  assert_true(script.contains("--interactive"))
   assert_true(script.contains("BUFFER="))
   assert_true(script.contains("bindkey"))
   assert_true(script.contains("^]"))
