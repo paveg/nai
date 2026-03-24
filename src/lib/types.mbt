@@ -53,6 +53,8 @@ pub struct Config {
   ollama_model : String
   openai_base_url : String
   openai_model : String
+  openai_api_key : String
   claude_base_url : String
   claude_model : String
+  claude_api_key : String
 } derive(Show, Eq)

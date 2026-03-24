@@ -303,17 +303,32 @@ async fn resolve_provider_name(args : @lib.CliArgs) -> String {
 }
 
 ///|
-fn get_api_key(provider_name : String) -> String {
+fn get_api_key(provider_name : String, config : @lib.Config) -> String {
+  // Priority: env var > config file
   match provider_name {
     "openai" =>
       match @sys.get_env_var("OPENAI_API_KEY") {
         Some(key) => key
-        None => abort("Error: OPENAI_API_KEY environment variable not set")
+        None =>
+          if config.openai_api_key != "" {
+            config.openai_api_key
+          } else {
+            abort(
+              "Error: No API key for OpenAI. Run 'nai --setup' or set OPENAI_API_KEY",
+            )
+          }
       }
     "claude" =>
       match @sys.get_env_var("ANTHROPIC_API_KEY") {
         Some(key) => key
-        None => abort("Error: ANTHROPIC_API_KEY environment variable not set")
+        None =>
+          if config.claude_api_key != "" {
+            config.claude_api_key
+          } else {
+            abort(
+              "Error: No API key for Claude. Run 'nai --setup' or set ANTHROPIC_API_KEY",
+            )
+          }
       }
     _ => "ollama"
   }
@@ -446,7 +461,7 @@ async fn main {
 
   // Resolve provider
   let provider_name = resolve_provider_name(args)
-  let api_key = get_api_key(provider_name)
+  let api_key = get_api_key(provider_name, config)
   let provider = @lib.build_provider(
     name=provider_name,
     model=args.model,

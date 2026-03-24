@@ -8,8 +8,20 @@ test "default_config has expected values" {
   assert_eq(c.ollama_model, "qwen2.5-coder:7b")
   assert_eq(c.openai_base_url, "https://api.openai.com/v1")
   assert_eq(c.openai_model, "gpt-4.1-mini")
+  assert_eq(c.openai_api_key, "")
   assert_eq(c.claude_base_url, "https://api.anthropic.com/v1")
   assert_eq(c.claude_model, "claude-haiku-4-5-20251001")
+  assert_eq(c.claude_api_key, "")
+}
+
+///|
+test "parse_config reads api_key from provider section" {
+  let s =
+    #|{"default_provider":"openai","openai":{"api_key":"sk-test123"}}
+  let json = @json.parse(s)
+  let c = parse_config(json)
+  assert_eq(c.openai_api_key, "sk-test123")
+  assert_eq(c.openai_model, "gpt-4.1-mini")
 }
 
 ///|

@@ -241,11 +241,6 @@ pub async fn run_setup() -> Unit {
                   let lines = render_input_lines("API key", key_val, true, true)
                   lines_rendered = tui_print_lines(lines)
                   tui_prln("")
-                  tui_prln(yellow("  → Add to your shell profile:"))
-                  tui_prln(
-                    dim("    export " + env_name + "=\"" + key_val + "\""),
-                  )
-                  tui_prln("")
                   lines_rendered = 0
                   step.set(2)
                   cursor.set(0)
@@ -310,15 +305,23 @@ pub async fn run_setup() -> Unit {
       _ => ()
     }
 
-    let config_json : Json = {
-      "default_provider": provider,
-      "history_depth": 10,
+    // Build config with API key in the provider section
+    let api_key = api_key_value.get()
+    // Build JSON config string manually to support dynamic provider key
+    let config_str = if api_key.length() > 0 {
+      let escaped_key = api_key.replace(old="\"", new="\\\"")
+      "{\"default_provider\":\"\{provider}\",\"history_depth\":10,\"\{provider}\":{\"api_key\":\"\{escaped_key}\"}}"
+    } else {
+      "{\"default_provider\":\"\{provider}\",\"history_depth\":10}"
     }
+    // Parse and re-stringify for pretty printing
+    let fallback : Json = {}
+    let config_json : Json = @json.parse(config_str) catch { _ => fallback }
     let config_path = "\{config_dir}/config.json"
     @fs.write_file(
       config_path,
       config_json.stringify(indent=2),
-      create=0o644,
+      create=0o600,
       truncate=true,
     )
 

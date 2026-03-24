@@ -8,8 +8,10 @@ pub fn default_config() -> Config {
     ollama_model: "qwen2.5-coder:7b",
     openai_base_url: "https://api.openai.com/v1",
     openai_model: "gpt-4.1-mini",
+    openai_api_key: "",
     claude_base_url: "https://api.anthropic.com/v1",
     claude_model: "claude-haiku-4-5-20251001",
+    claude_api_key: "",
   }
 }
 
@@ -35,19 +37,45 @@ pub fn parse_config(json : Json) -> Config {
     { "ollama": { "model": String(m), .. }, .. } => (d.ollama_base_url, m)
     _ => (d.ollama_base_url, d.ollama_model)
   }
-  let (openai_base_url, openai_model) = match json {
+  let (openai_base_url, openai_model, openai_api_key) = match json {
+    {
+      "openai": {
+        "base_url": String(bu),
+        "model": String(m),
+        "api_key": String(k),
+        ..
+      },
+      ..
+    } => (bu, m, k)
     { "openai": { "base_url": String(bu), "model": String(m), .. }, .. } =>
-      (bu, m)
-    { "openai": { "base_url": String(bu), .. }, .. } => (bu, d.openai_model)
-    { "openai": { "model": String(m), .. }, .. } => (d.openai_base_url, m)
-    _ => (d.openai_base_url, d.openai_model)
+      (bu, m, d.openai_api_key)
+    { "openai": { "api_key": String(k), .. }, .. } =>
+      (d.openai_base_url, d.openai_model, k)
+    { "openai": { "base_url": String(bu), .. }, .. } =>
+      (bu, d.openai_model, d.openai_api_key)
+    { "openai": { "model": String(m), .. }, .. } =>
+      (d.openai_base_url, m, d.openai_api_key)
+    _ => (d.openai_base_url, d.openai_model, d.openai_api_key)
   }
-  let (claude_base_url, claude_model) = match json {
+  let (claude_base_url, claude_model, claude_api_key) = match json {
+    {
+      "claude": {
+        "base_url": String(bu),
+        "model": String(m),
+        "api_key": String(k),
+        ..
+      },
+      ..
+    } => (bu, m, k)
     { "claude": { "base_url": String(bu), "model": String(m), .. }, .. } =>
-      (bu, m)
-    { "claude": { "base_url": String(bu), .. }, .. } => (bu, d.claude_model)
-    { "claude": { "model": String(m), .. }, .. } => (d.claude_base_url, m)
-    _ => (d.claude_base_url, d.claude_model)
+      (bu, m, d.claude_api_key)
+    { "claude": { "api_key": String(k), .. }, .. } =>
+      (d.claude_base_url, d.claude_model, k)
+    { "claude": { "base_url": String(bu), .. }, .. } =>
+      (bu, d.claude_model, d.claude_api_key)
+    { "claude": { "model": String(m), .. }, .. } =>
+      (d.claude_base_url, m, d.claude_api_key)
+    _ => (d.claude_base_url, d.claude_model, d.claude_api_key)
   }
   {
     default_provider,
@@ -57,7 +85,9 @@ pub fn parse_config(json : Json) -> Config {
     ollama_model,
     openai_base_url,
     openai_model,
+    openai_api_key,
     claude_base_url,
     claude_model,
+    claude_api_key,
   }
 }
