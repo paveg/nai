@@ -18,3 +18,18 @@ pub struct DangerReport {
   is_dangerous : Bool
   warnings : Array[String]
 } derive(Show, Eq)
+
+pub(all) struct Environment {
+  os : String
+  shell : String
+  cwd : String
+  platform : String
+  pkg_manager : String
+  clipboard : String
+  find_variant : String
+  sed_variant : String
+  date_variant : String
+  stat_variant : String
+  available_tools : Array[String]
+  history : Array[String]
+} derive(Show)
