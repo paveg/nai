@@ -1,0 +1,25 @@
+# MoonBit build output
+_build/
+target/
+
+# MoonBit dependencies (installed via moon update)
+.mooncakes/
+
+# Environment
+.envrc
+.env
+.env.*
+
+# Claude Code
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
