@@ -13,7 +13,7 @@ pub fn build_provider(
       }
     }
     "openai" => {
-      let m = if model == "" { "gpt-4o-mini" } else { model }
+      let m = if model == "" { "gpt-4.1-nano" } else { model }
       {
         base_url: "https://api.openai.com/v1",
         headers: { "Authorization": "Bearer \{api_key}", "Content-Type": "application/json" },
