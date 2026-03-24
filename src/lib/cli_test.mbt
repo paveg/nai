@@ -82,3 +82,23 @@ test "parse empty args shows help" {
   let args = parse_args(["nai"])
   assert_eq(args.help, true)
 }
+
+test "default history_depth is -1" {
+  let args = parse_args(["nai", "some query"])
+  assert_eq(args.history_depth, -1)
+}
+
+test "parse --history-depth flag" {
+  let args = parse_args(["nai", "--history-depth", "20", "some query"])
+  assert_eq(args.history_depth, 20)
+}
+
+test "parse --no-history flag" {
+  let args = parse_args(["nai", "--no-history", "some query"])
+  assert_eq(args.no_history, true)
+}
+
+test "parse --init flag" {
+  let args = parse_args(["nai", "--init", "zsh"])
+  assert_eq(args.init_shell, "zsh")
+}

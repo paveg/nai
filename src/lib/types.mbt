@@ -6,6 +6,9 @@ pub struct CliArgs {
   model : String     // "" means use provider default
   help : Bool
   version : Bool
+  history_depth : Int  // -1 means use config default
+  no_history : Bool
+  init_shell : String  // "" or "zsh"/"bash"/"fish"
 } derive(Show, Eq)
 
 pub struct Provider {
